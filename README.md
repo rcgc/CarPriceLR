@@ -1,4 +1,4 @@
-# CarPriceLR
+# Predicting car price using linear regression
 ## Abstract
 Text
 ## Introduction
