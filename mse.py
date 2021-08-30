@@ -100,3 +100,9 @@ while(option==0):
     Y_queries.clear()
 
 plt.show()
+
+# Examples of real queries
+# Kms_driven -> Selling_Price
+# 27000 -> 3.35
+# 43000 -> 4.75
+# 42450 -> 4.6
