@@ -41,31 +41,59 @@ print('Independent term: ', B[0])
 print('Slope: ', B[1])
 print('Mean (whole dataset): $', mean, "usd")
 
-Y_predict = list()
+Y_predict_train = list()
+
+for i in df_X_train.T[1]:
+    Y_predict_train.append(B[0] + B[1] * i)
+
+Y_predict_train = np.array(Y_predict_train)
+
+mse_train = 0
+
+for i, j in zip(df_Y_train, Y_predict_train):
+    mse_train = mse_train + (i - j) * (i - j)
+
+mse_train = mse_train / 300
+
+print(df_X_train.T[1])
+print('mse in training: ', mse_train)
+
+ss_res_train = 0
+
+for i in df_Y_train:
+    ss_res_train = ss_res_train + abs(i - mean) * abs(i - mean)
+
+ss_tot_train = mse_train * 300
+
+R_train = 1 - (ss_res_train / ss_tot_train)
+
+print('coeficient of determination in training: ', R_train)
+
+Y_predict_test = list()
 
 for i in df_X_test:
-    Y_predict.append(B[0] + B[1] * i)
+    Y_predict_test.append(B[0] + B[1] * i)
 
-Y_predict = np.array(Y_predict)
-mse = 0
+Y_predict_test = np.array(Y_predict_test)
+mse_test = 0
 
-for i, j in zip(df_Y_test, Y_predict):
-    mse = mse + (i-j)*(i-j)
+for i, j in zip(df_Y_test, Y_predict_test):
+    mse_test = mse_test + (i - j) * (i - j)
 
-mse = mse/300
+mse_test = mse_test / 300
 
-print('mse: ', mse)
+print('mse in testing: ', mse_test)
 
-ss_res = 0
+ss_res_test = 0
 
 for i in df_Y_test:
-    ss_res = ss_res + abs(i - mean) * abs(i - mean)
+    ss_res_test = ss_res_test + abs(i - mean) * abs(i - mean)
 
-ss_tot = mse * 300
+ss_tot_test = mse_test * 300
 
-R = 1 - (ss_res / ss_tot)
+R_test = 1 - (ss_res_test / ss_tot_test)
 
-print('coeficient of determination: ', R)
+print('coeficient of determination in testing: ', R_test)
 
 plt.show(block=False)
 
@@ -89,7 +117,7 @@ while(option==0):
     # Queries
     for i in range(0, n):
         ele = int(input())
-        print(ele, '->', B[0] + B[1] * ele)
+        print(ele, '->', (B[0] + B[1] * ele)/1000)
         X_queries.append(ele)
         Y_queries.append(B[0] + B[1] * ele)
 
@@ -101,7 +129,7 @@ while(option==0):
 
 plt.show()
 
-# Examples of real queries
+# Examples of real queries0
 # Kms_driven -> Selling_Price
 # 27000 -> 3.35
 # 43000 -> 4.75
