@@ -55,7 +55,6 @@ for i, j in zip(df_Y_train, Y_predict_train):
 
 mse_train = mse_train / 300
 
-print(df_X_train.T[1])
 print('mse in training: ', mse_train)
 
 ss_res_train = 0
